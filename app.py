@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -18,9 +18,11 @@ class Todo(db.Model):
     def __repr__(self) -> str:
         return f"{self.sno} - {self.title}" 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    todo= Todo(title="Skills", desc="add skills")
+    if request.method=='POST':
+        print("post")
+    todo= Todo(title="Skills", desc="Python frameworks like Flask and Django")
     db.session.add(todo)
     db.sesion.commit()  
     allTodo = Todo.query.all()
