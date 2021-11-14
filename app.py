@@ -21,15 +21,14 @@ class Todo(db.Model):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method=='POST':
-        print("post")
-    todo= Todo(title="Skills", desc="Python frameworks like Flask and Django")
+        title= request.form['title']
+        desc= request.form['desc']
+    todo= Todo(title=title, desc=desc)
     db.session.add(todo)
     db.sesion.commit()  
     allTodo = Todo.query.all()
     print(allTodo)                                             
-    return  render_template("index.html", allTodo=allTodo)
-    #return 'Hello World'
-    
+    return  render_template("index.html", allTodo=allTodo)  
 
 if __name__ =="__main__":
     app.run(debug=True, port=8000)
