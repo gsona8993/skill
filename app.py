@@ -28,7 +28,19 @@ def index():
     db.sesion.commit()  
     allTodo = Todo.query.all()
     print(allTodo)                                             
-    return  render_template("index.html", allTodo=allTodo)  
+    return  render_template("index.html", allTodo=allTodo)
+@app.route('/update')
+def update():
+    allTodo = Todo.query.all()
+    print(allTodo)
+    return 
+@app.route('/delete/<int:sno>')
+def delete(sno):
+    todo = Todo.query.filter_by(sno=sno)
+    db.session.delete(todo)
+    db.session.commit()
+    return
+
 
 if __name__ =="__main__":
     app.run(debug=True, port=8000)
